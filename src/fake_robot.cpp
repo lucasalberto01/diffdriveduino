@@ -27,8 +27,8 @@ hardware_interface::CallbackReturn FakeRobot::on_init(const hardware_interface::
   // Note: It doesn't matter that we haven't set encoder counts per rev
   // since the fake robot bypasses the encoder code completely
 
-  l_wheel_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev);
-  r_wheel_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev);
+  l_wheel_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev_left);
+  r_wheel_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev_right);
 
   RCLCPP_INFO(logger_, "Finished Configuration");
 
