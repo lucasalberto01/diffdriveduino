@@ -8,9 +8,7 @@ FakeRobot::FakeRobot()
   : logger_(rclcpp::get_logger("FakeRobot"))
 {}
 
-
-
-CallbackReturn FakeRobot::on_init(const hardware_interface::HardwareInfo & info)
+hardware_interface::CallbackReturn FakeRobot::on_init(const hardware_interface::HardwareInfo & info)
 {
   if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS)
   {
@@ -29,8 +27,8 @@ CallbackReturn FakeRobot::on_init(const hardware_interface::HardwareInfo & info)
   // Note: It doesn't matter that we haven't set encoder counts per rev
   // since the fake robot bypasses the encoder code completely
 
-  l_wheel_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev);
-  r_wheel_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev);
+  l_wheel_.setup(cfg_.left_wheel_name, cfg_.enc_counts_per_rev_left);
+  r_wheel_.setup(cfg_.right_wheel_name, cfg_.enc_counts_per_rev_right);
 
   RCLCPP_INFO(logger_, "Finished Configuration");
 
@@ -64,21 +62,21 @@ std::vector<hardware_interface::CommandInterface> FakeRobot::export_command_inte
 }
 
 
-CallbackReturn FakeRobot::on_activate(const rclcpp_lifecycle::State & /*previous_state*/)
+hardware_interface::CallbackReturn FakeRobot::on_activate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(logger_, "Starting Controller...");
 
   return CallbackReturn::SUCCESS;
 }
 
-CallbackReturn FakeRobot::on_deactivate(const rclcpp_lifecycle::State & /*previous_state*/)
+hardware_interface::CallbackReturn FakeRobot::on_deactivate(const rclcpp_lifecycle::State & /*previous_state*/)
 {
   RCLCPP_INFO(logger_, "Stopping Controller...");
 
   return CallbackReturn::SUCCESS;;
 }
 
-hardware_interface::return_type FakeRobot::read()
+hardware_interface::return_type FakeRobot::read(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
 
   // TODO fix chrono duration
@@ -99,7 +97,7 @@ hardware_interface::return_type FakeRobot::read()
   
 }
 
-hardware_interface::return_type FakeRobot::write()
+hardware_interface::return_type FakeRobot::write(const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
 
   // Set the wheel velocities to directly match what is commanded

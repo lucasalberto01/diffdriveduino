@@ -14,7 +14,8 @@ int main(int argc, char **argv)
   n.getParam("right_wheel_name", robot_cfg.right_wheel_name);
   n.getParam("baud_rate", robot_cfg.baud_rate);
   n.getParam("device", robot_cfg.device);
-  n.getParam("enc_counts_per_rev", robot_cfg.enc_counts_per_rev);
+  n.getParam("enc_counts_per_rev_left", robot_cfg.enc_counts_per_rev_left);
+  n.getParam("enc_counts_per_rev_right", robot_cfg.enc_counts_per_rev_right);
   n.getParam("robot_loop_rate", robot_cfg.loop_rate);
   
 
